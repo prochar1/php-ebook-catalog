@@ -16,7 +16,7 @@ class BookController extends Controller
         $this->bookModel = new Book($db);
     }
 
-    public function index(array $params): void
+    public function index(): void
     {
         $books = $this->bookModel->getAllBooks();
 
@@ -45,7 +45,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function admin(array $params): void
+    public function admin(): void
     {
         $books = $this->bookModel->getAllBooks();
 
@@ -55,7 +55,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function import(array $params): void
+    public function import(): void
     {
         $result = $this->bookModel->importBooksFromJson(__DIR__ . '/../../data/books.json');
 
@@ -65,7 +65,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function create(array $params): void
+    public function create(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $this->bookModel->createBook($_POST);
