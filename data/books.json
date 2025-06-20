@@ -1,0 +1,37 @@
+[
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "publication_year": 1925,
+    "annotation": "A novel about the American dream and the disillusionment that comes with it.",
+    "rating": 4.5
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "publication_year": 1949,
+    "annotation": "A dystopian novel set in a totalitarian society under constant surveillance.",
+    "rating": 4.8
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "publication_year": 1960,
+    "annotation": "A novel about the serious issues of rape and racial inequality, seen through the eyes of a child.",
+    "rating": 4.7
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "publication_year": 1813,
+    "annotation": "A romantic novel that critiques the British landed gentry at the end of the 18th century.",
+    "rating": 4.6
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "publication_year": 1951,
+    "annotation": "A story about teenage angst and alienation, narrated by the iconic Holden Caulfield.",
+    "rating": 4.0
+  }
+]
