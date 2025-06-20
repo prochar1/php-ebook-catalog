@@ -1,0 +1,16 @@
+{
+  "name": "proch/php-ebook-catalog",
+  "description": "PHP Ebook Catalog Application",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    },
+    "files": [
+      "src/config.php"
+    ]
+  },
+  "require": {
+    "php": ">=8.3"
+  }
+}

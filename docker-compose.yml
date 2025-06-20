@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  web:
+    image: php:8.4-apache
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+    command: >
+      sh -c "docker-php-ext-install mysqli pdo pdo_mysql &&
+             a2enmod rewrite &&
+             sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf &&
+             sed -i 's|<Directory /var/www/html>|<Directory /var/www/html/public>|g' /etc/apache2/sites-available/000-default.conf &&
+             chown -R www-data:www-data /var/www/html &&
+             apache2-foreground"
+
+  db:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ebook
+      MYSQL_USER: ebook
+      MYSQL_PASSWORD: ebook
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: ebook
+      MARIADB_USER: ebook
+      MARIADB_PASSWORD: ebook
+    volumes:
+      - db_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+
+volumes:
+  db_data:

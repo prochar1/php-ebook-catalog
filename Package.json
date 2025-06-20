@@ -1,0 +1,10 @@
+{
+  "name": "php-ebook-catalog",
+  "scripts": {
+    "sass": "sass src/sass/style.scss:public/css/style.css src/sass/admin.scss:public/css/admin.css --watch --style=compressed",
+    "build-css": "sass src/sass/style.scss:public/css/style.css src/sass/admin.scss:public/css/admin.css --style=compressed"
+  },
+  "devDependencies": {
+    "sass": "^1.89.2"
+  }
+}
