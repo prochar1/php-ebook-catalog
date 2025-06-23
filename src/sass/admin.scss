@@ -1,0 +1,148 @@
+@use "variables" as *;
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: $text;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: $primary;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: $light;
+  font-weight: bold;
+}
+
+// Alerts
+.alert {
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+
+.alert-success {
+  background: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.alert-error {
+  background: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+// Buttons
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header-actions,
+.page-actions {
+  margin-bottom: 20px;
+}
+
+// Login
+.login-page {
+  background: $primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-card {
+  background: $white;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 3rem;
+    margin: 0 0 15px 0;
+  }
+
+  h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    color: $text;
+  }
+
+  p {
+    margin: 0;
+    color: $gray;
+  }
+}
+
+.login-form {
+  margin-bottom: 25px;
+
+  .btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+  }
+}
+
+.login-footer {
+  text-align: center;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+
+  a {
+    color: $gray;
+    text-decoration: none;
+
+    &:hover {
+      color: $text;
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    padding: 0;
+  }
+}

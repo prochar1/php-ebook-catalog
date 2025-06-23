@@ -1,0 +1,144 @@
+@use "variables" as *;
+@use "print" as *;
+
+// Base
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background: $background;
+  color: $text;
+}
+
+// Header
+header {
+  background: $primary;
+  color: $white;
+  padding: 20px 0;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  nav {
+    margin-top: 15px;
+
+    ul {
+      padding: 0;
+      list-style: none;
+
+      li {
+        display: inline;
+        margin: 0 15px;
+      }
+    }
+
+    a {
+      color: $white;
+      text-decoration: none;
+      padding: 8px 12px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+main {
+  padding: 30px;
+  max-width: 960px;
+  margin: 20px auto;
+  background: $white;
+}
+
+button,
+.btn,
+input[type="submit"] {
+  background: $secondary;
+  color: $white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  min-width: 120px;
+  line-height: 1;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+a.btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+}
+
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.book-item {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background: $white;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+
+    a {
+      color: $primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  p {
+    margin: 8px 0;
+    line-height: 1.5;
+  }
+}
+
+.book-detail {
+  h2 {
+    color: $primary;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .book-list {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  header {
+    nav ul li {
+      display: block;
+      margin: 5px 0;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .book-item {
+    padding: 15px;
+  }
+}
