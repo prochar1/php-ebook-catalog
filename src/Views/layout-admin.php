@@ -16,12 +16,11 @@
         <nav class="admin-nav">
             <ul>
                 <?php if (true): ?>
-                    <li><a href="/admin">Dashboard</a></li>
-                    <li><a href="/admin/knihy">Správa knih</a></li>
+                    <li><a href="/admin">Správa knih</a></li>
                     <li><a href="/">Návrat na web</a></li>
-                    <li><a href="/admin/odhlaseni">Odhlásit se</a></li>
+                    <li><a href="/admin/logout">Odhlásit se</a></li>
                 <?php else: ?>
-                    <li><a href="/admin/prihlaseni">Přihlásit se</a></li>
+                    <li><a href="/admin/login">Přihlásit se</a></li>
                     <li><a href="/">Návrat na web</a></li>
                 <?php endif; ?>
             </ul>

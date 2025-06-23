@@ -17,6 +17,12 @@ class Controller
 
     protected function renderAdmin(string $view, array $data = []): void
     {
-        $this->render($view, $data, 'admin-layout');
+        $this->render($view, $data, 'layout-admin');
+    }
+
+    protected function redirect(string $url): void
+    {
+        header('Location: ' . $url);
+        exit;
     }
 }

@@ -7,7 +7,7 @@
     <div class="book-list">
         <?php foreach ($books as $book): ?>
             <div class="book-item">
-                <h3><a href="/book/<?= htmlspecialchars($book['id']) ?>"><?= htmlspecialchars($book['title']) ?></a></h3>
+                <h3><a href="/books/<?= htmlspecialchars($book['id']) ?>"><?= htmlspecialchars($book['title']) ?></a></h3>
                 <p><strong>Autor:</strong> <?= htmlspecialchars($book['author']) ?></p>
                 <p><strong>Rok vydání:</strong> <?= htmlspecialchars($book['publication_year']) ?></p>
             </div>

@@ -81,6 +81,6 @@ class Router
     private function handle404(): void
     {
         header("HTTP/1.0 404 Not Found");
-        require_once __DIR__ . '/Views/404.php';
+        require_once __DIR__ . '/../Views/404.php';
     }
 }
