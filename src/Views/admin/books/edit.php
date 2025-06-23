@@ -79,11 +79,6 @@
                 <label for="author" class="form-label">Autor *</label>
                 <input type="text"
                     id="author"
-                    name="author"> <?php // Pole pro autora - povinné 
-                                    ?>
-                <label for="author" class="form-label">Autor *</label>
-                <input type="text"
-                    id="author"
                     name="author"
                     class="form-input"
                     value="<?= htmlspecialchars($book['author']) ?>"
