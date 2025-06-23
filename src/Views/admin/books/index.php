@@ -5,6 +5,11 @@
             <a href="/admin/books/create" class="btn">
                 <i class="icon-plus"></i> Přidat novou knihu
             </a>
+            <form action="/admin/import" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-secondary">
+                    <i class="icon-upload"></i> Importovat z JSON
+                </button>
+            </form>
         </div>
     </div>
 
@@ -12,8 +17,15 @@
         <div class="empty-state">
             <div class="empty-icon">📚</div>
             <h3>Žádné knihy v katalogu</h3>
-            <p>Začněte přidáním své první knihy do katalogu.</p>
-            <a href="/admin/books/create" class="btn">Přidat první knihu</a>
+            <p>Začněte přidáním své první knihy do katalogu nebo importem existujících dat.</p>
+            <div class="empty-actions">
+                <a href="/admin/books/create" class="btn">Přidat první knihu</a>
+                <form action="/admin/import" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-secondary">
+                        Importovat z JSON
+                    </button>
+                </form>
+            </div>
         </div>
     <?php else: ?>
         <div class="table-container">
