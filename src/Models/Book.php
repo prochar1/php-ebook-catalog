@@ -72,12 +72,16 @@ class Book
         $sql = "INSERT INTO books (title, author, publication_year, rating, annotation) 
                 VALUES (?, ?, ?, ?, ?)";
 
+        // Sanitizace dat - OPRAVA!
+        $rating = $this->sanitizeRating($data['rating'] ?? '');
+        $annotation = $this->sanitizeAnnotation($data['annotation'] ?? '');
+
         $stmt = $this->db->query($sql, [
             $data['title'] ?? '',
             $data['author'] ?? '',
             $data['publication_year'] ?? 0,
-            $data['rating'] ?? 0.0,
-            $data['annotation'] ?? ''
+            $rating,        // NULL nebo float
+            $annotation     // NULL nebo string
         ]);
 
         return $stmt->rowCount() > 0;
@@ -96,12 +100,16 @@ class Book
         $sql = "UPDATE books SET title = ?, author = ?, publication_year = ?, 
                 rating = ?, annotation = ? WHERE id = ?";
 
+        // Sanitizace dat - OPRAVA!
+        $rating = $this->sanitizeRating($data['rating'] ?? '');
+        $annotation = $this->sanitizeAnnotation($data['annotation'] ?? '');
+
         $stmt = $this->db->query($sql, [
             $data['title'] ?? '',
             $data['author'] ?? '',
             $data['publication_year'] ?? 0,
-            $data['rating'] ?? 0.0,
-            $data['annotation'] ?? '',
+            $rating,        // NULL nebo float
+            $annotation,    // NULL nebo string
             $id
         ]);
 
@@ -174,5 +182,52 @@ class Book
             'added' => $addedCount,
             'skipped' => $skippedCount
         ];
+    }
+
+    /**
+     * Sanitizuje hodnotu hodnocení
+     * 
+     * Převede prázdný string nebo neplatnou hodnotu na NULL,
+     * jinak vrátí float hodnotu.
+     * 
+     * @param mixed $rating Hodnota hodnocení
+     * 
+     * @return float|null Sanitizované hodnocení
+     */
+    private function sanitizeRating($rating): ?float
+    {
+        // Pokud je prázdné, vrať NULL
+        if ($rating === '' || $rating === null || $rating === 0) {
+            return null;
+        }
+
+        // Převeď na float
+        $floatRating = (float)$rating;
+
+        // Kontrola rozsahu (0-5)
+        if ($floatRating < 0 || $floatRating > 5) {
+            return null;
+        }
+
+        return $floatRating;
+    }
+
+    /**
+     * Sanitizuje anotaci
+     * 
+     * Převede prázdný string na NULL, jinak vrátí trimovaný string.
+     * 
+     * @param mixed $annotation Hodnota anotace
+     * 
+     * @return string|null Sanitizovaná anotace
+     */
+    private function sanitizeAnnotation($annotation): ?string
+    {
+        if ($annotation === '' || $annotation === null) {
+            return null;
+        }
+
+        $trimmed = trim((string)$annotation);
+        return $trimmed === '' ? null : $trimmed;
     }
 }

@@ -160,7 +160,7 @@ class BookController extends Controller
             $result = $this->bookModel->createBook($_POST);
 
             if ($result) {
-                header('Location: /admin');
+                header('Location: /admin/books');
                 exit;
             }
         }
@@ -188,7 +188,7 @@ class BookController extends Controller
             $result = $this->bookModel->updateBook($bookId, $_POST);
 
             if ($result) {
-                header('Location: /admin/books/' . $bookId);
+                header('Location: /admin/books/' . $bookId . '/edit');
                 exit;
             }
         }

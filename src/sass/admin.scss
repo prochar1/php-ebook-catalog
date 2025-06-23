@@ -137,3 +137,9 @@ th {
     padding: 0;
   }
 }
+
+.btn.dirty-state::after {
+  content: " *";
+  color: #fff;
+  font-weight: bold;
+}

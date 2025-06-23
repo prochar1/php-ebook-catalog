@@ -3,7 +3,7 @@
         <h2>Upravit knihu</h2>
         <div class="header-actions">
             <a href="/admin/books" class="btn">← Zpět na seznam</a>
-            <a href="/admin/books/<?= $book['id'] ?>" target="_blank" class="btn" title="Zobrazit na webu">
+            <a href="/books/<?= $book['id'] ?>" target="_blank" class="btn" title="Zobrazit na webu">
                 Náhled
             </a>
         </div>
