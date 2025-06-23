@@ -7,16 +7,44 @@ use App\Core\Database;
 use App\Core\Auth;
 use App\Models\Book;
 
+/**
+ * Controller pro správu knih
+ * 
+ * Zpracovává požadavky související s knihami - zobrazení katalogu,
+ * detailu knihy a administrační operace (CRUD).
+ * 
+ * @package App\Controllers
+ * @author  Radek Procházka
+ * @version 1.0
+ */
 class BookController extends Controller
 {
+    /**
+     * Instance modelu pro práci s knihami
+     * 
+     * @var Book
+     */
     private Book $bookModel;
 
+    /**
+     * Konstruktor controlleru
+     * 
+     * Inicializuje databázové připojení a model pro knihy.
+     */
     public function __construct()
     {
         $db = new Database();
         $this->bookModel = new Book($db);
     }
 
+    /**
+     * Zobrazí katalog všech knih (hlavní stránka)
+     * 
+     * Veřejná metoda dostupná všem uživatelům.
+     * Načte všechny knihy z databáze a zobrazí je v katalogu.
+     * 
+     * @return void
+     */
     public function index(): void
     {
         $books = $this->bookModel->getAllBooks();
@@ -27,6 +55,16 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * Zobrazí detail konkrétní knihy
+     * 
+     * Veřejná metoda pro zobrazení podrobností o knize.
+     * Pokud kniha neexistuje, zobrazí stránku "kniha nenalezena".
+     * 
+     * @param array $params URL parametry obsahující 'id' knihy
+     * 
+     * @return void
+     */
     public function show(array $params): void
     {
         $bookId = (int)$params['id'];
@@ -46,6 +84,14 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * Zobrazí hlavní administrační rozhraní
+     * 
+     * Chráněná metoda - vyžaduje přihlášení administrátora.
+     * Zobrazí základní admin dashboard se seznamem knih.
+     * 
+     * @return void
+     */
     public function admin(): void
     {
         Auth::requireLogin();
@@ -58,6 +104,14 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * Zobrazí pokročilou správu knih
+     * 
+     * Chráněná metoda pro detailní správu knih s více funkcemi.
+     * Zobrazí tabulku se všemi knihami a možnostmi úprav.
+     * 
+     * @return void
+     */
     public function manage(): void
     {
         Auth::requireLogin();
@@ -70,6 +124,14 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * Spustí import knih z JSON souboru
+     * 
+     * Chráněná metoda - importuje knihy ze souboru data/books.json.
+     * Zobrazí výsledek importu včetně počtu přidaných a přeskočených knih.
+     * 
+     * @return void
+     */
     public function import(): void
     {
         Auth::requireLogin();
@@ -82,6 +144,14 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * Vytvoření nové knihy
+     * 
+     * Chráněná metoda - zpracovává GET (zobrazí formulář) i POST (uloží data).
+     * Po úspěšném vytvoření přesměruje zpět do administrace.
+     * 
+     * @return void
+     */
     public function create(): void
     {
         Auth::requireLogin();
@@ -98,6 +168,16 @@ class BookController extends Controller
         $this->renderAdmin('admin/books/create');
     }
 
+    /**
+     * Úprava existující knihy
+     * 
+     * Chráněná metoda - zpracovává GET (zobrazí formulář) i POST (uloží změny).
+     * Načte existující data knihy a umožní jejich editaci.
+     * 
+     * @param array $params URL parametry obsahující 'id' knihy k úpravě
+     * 
+     * @return void
+     */
     public function update(array $params): void
     {
         Auth::requireLogin();
@@ -120,6 +200,16 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * Smazání knihy z databáze
+     * 
+     * Chráněná metoda - zpracovává pouze POST požadavky.
+     * Smaže knihu podle ID a přesměruje zpět na seznam knih.
+     * 
+     * @param array $params URL parametry obsahující 'id' knihy ke smazání
+     * 
+     * @return void
+     */
     public function delete(array $params): void
     {
         Auth::requireLogin();

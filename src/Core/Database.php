@@ -7,33 +7,54 @@ use PDOException;
 use PDOStatement;
 use Exception;
 
+/**
+ * Třída pro správu databázového připojení a operací
+ * 
+ * Poskytuje PDO připojení k MySQL/MariaDB databázi
+ * a základní metody pro práci s databází.
+ * 
+ * @package App\Core
+ * @author  Radek Procházka
+ * @version 1.0
+ */
 class Database
 {
+    /**
+     * Instance PDO připojení
+     * 
+     * @var PDO
+     */
     private PDO $pdo;
 
+    /**
+     * Konstruktor - inicializuje databázové připojení
+     * 
+     * Vytvoří PDO připojení na základě konstant definovaných v config.php.
+     * Automaticky vytvoří tabulky pokud neexistují.
+     * 
+     * @throws PDOException Pokud se nepodaří připojit k databázi
+     * @throws Exception    Pokud je použit nepodporovaný databázový driver
+     */
     public function __construct()
     {
         $dsn = '';
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Výchozí fetch mód bude asociativní pole
-            PDO::ATTR_EMULATE_PREPARES   => false, // Vypnutí emulace prepared statements pro lepší výkon a bezpečnost
-            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4' // Nastavení znakové sady pro MySQL/MariaDB
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4'
         ];
 
         try {
-            if (DB_DRIVER === 'mysql') { // Nyní cílíme na MySQL/MariaDB
+            if (DB_DRIVER === 'mysql') {
                 $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET;
                 $this->pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
             } else {
-                // Tato větev by se již neměla spustit, pokud je DB_DRIVER nastaven na 'mysql'
                 throw new Exception("Nepodporovaný databázový driver: " . DB_DRIVER);
             }
 
-            // Vytvoření tabulky pro MariaDB
             $this->createTables();
         } catch (PDOException $e) {
-            // Zde byste v produkčním prostředí měli chybu logovat, nikoli zobrazovat uživateli
             die("Chyba připojení k databázi: " . $e->getMessage());
         } catch (Exception $e) {
             die("Chyba konfigurace databáze: " . $e->getMessage());
@@ -41,7 +62,9 @@ class Database
     }
 
     /**
-     * Vrátí instanci PDO připojení.
+     * Vrátí instanci PDO připojení
+     * 
+     * @return PDO Instance databázového připojení
      */
     public function getConnection(): PDO
     {
@@ -49,10 +72,13 @@ class Database
     }
 
     /**
-     * Spustí SQL dotaz s připravenými parametry.
-     * @param string $sql SQL dotaz
-     * @param array $params Pole parametrů pro dotaz
-     * @return PDOStatement
+     * Spustí SQL dotaz s připravenými parametry
+     * 
+     * @param string $sql    SQL dotaz s placeholdery
+     * @param array  $params Pole parametrů pro dotaz
+     * 
+     * @return PDOStatement Připravený statement s výsledky
+     * @throws PDOException Pokud dojde k chybě při vykonávání dotazu
      */
     public function query(string $sql, array $params = []): PDOStatement
     {
@@ -62,7 +88,12 @@ class Database
     }
 
     /**
-     * Vytvoří tabulky, pokud neexistují (pro MariaDB).
+     * Vytvoří tabulky pokud neexistují
+     * 
+     * Definuje a vytvoří strukturu tabulky 'books' pro MariaDB/MySQL.
+     * 
+     * @return void
+     * @throws PDOException Pokud dojde k chybě při vytváření tabulek
      */
     private function createTables(): void
     {

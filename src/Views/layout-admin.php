@@ -1,3 +1,7 @@
+<?php
+// Make sure the Auth class is available
+use App\Core\Auth;
+?>
 <!DOCTYPE html>
 <html lang="cs">
 
@@ -15,7 +19,7 @@
         <h1><?= htmlspecialchars($title ?? 'Administrace') ?></h1>
         <nav class="admin-nav">
             <ul>
-                <?php if (true): ?>
+                <?php if (Auth::isLoggedIn()): ?>
                     <li><a href="/admin">Správa knih</a></li>
                     <li><a href="/">Návrat na web</a></li>
                     <li><a href="/admin/logout">Odhlásit se</a></li>

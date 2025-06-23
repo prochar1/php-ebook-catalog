@@ -57,15 +57,17 @@
             </div>
 
             <div class="form-group">
-                <label for="rating" class="form-label">Hodnocení (1-5)</label>
-                <select id="rating" name="rating" class="form-select">
-                    <option value="">-- Bez hodnocení --</option>
-                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                        <option value="<?= $i ?>" <?= ($book['rating'] ?? '') == $i ? 'selected' : '' ?>>
-                            <?= $i ?> <?= str_repeat('★', $i) ?>
-                        </option>
-                    <?php endfor; ?>
-                </select>
+                <label for="rating" class="form-label">Hodnocení (0-5)</label>
+                <input type="number"
+                    id="rating"
+                    name="rating"
+                    class="form-input"
+                    value="<?= $book['rating'] ?? '' ?>"
+                    min="0"
+                    max="5"
+                    step="0.1"
+                    placeholder="např. 4.5">
+                <small class="form-help">Můžete zadat hodnocení s desetinným místem (např. 4.5)</small>
             </div>
         </div>
 

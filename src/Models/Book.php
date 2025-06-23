@@ -4,17 +4,39 @@ namespace App\Models;
 
 use App\Core\Database;
 
+/**
+ * Model pro práci s knihami
+ * 
+ * Poskytuje metody pro CRUD operace s knihami v databázi
+ * včetně importu dat z JSON souboru.
+ * 
+ * @package App\Models
+ * @author  Radek Procházka
+ * @version 1.0
+ */
 class Book
 {
+    /**
+     * Instance databázového připojení
+     * 
+     * @var Database
+     */
     private Database $db;
 
+    /**
+     * Konstruktor modelu
+     * 
+     * @param Database $db Instance databázového připojení
+     */
     public function __construct(Database $db)
     {
         $this->db = $db;
     }
 
     /**
-     * Získá všechny knihy z databáze.
+     * Získá všechny knihy z databáze
+     * 
+     * @return array<array{id: int, title: string, author: string, publication_year: int, annotation: string|null, rating: float|null}>
      */
     public function getAllBooks(): array
     {
@@ -24,7 +46,11 @@ class Book
     }
 
     /**
-     * Získá knihu podle jejího ID.
+     * Získá knihu podle jejího ID
+     * 
+     * @param int $id ID knihy
+     * 
+     * @return array{id: int, title: string, author: string, publication_year: int, annotation: string|null, rating: float|null}|null
      */
     public function getBookById(int $id): ?array
     {
@@ -35,7 +61,11 @@ class Book
     }
 
     /**
-     * Vytvoří novou knihu.
+     * Vytvoří novou knihu v databázi
+     * 
+     * @param array{title: string, author: string, publication_year: int, rating?: float, annotation?: string} $data Data knihy
+     * 
+     * @return bool True při úspěchu, false při chybě
      */
     public function createBook(array $data): bool
     {
@@ -54,7 +84,12 @@ class Book
     }
 
     /**
-     * Aktualizuje existující knihu.
+     * Aktualizuje existující knihu
+     * 
+     * @param int   $id   ID knihy k aktualizaci
+     * @param array $data Nová data knihy
+     * 
+     * @return bool True při úspěchu, false při chybě
      */
     public function updateBook(int $id, array $data): bool
     {
@@ -74,7 +109,11 @@ class Book
     }
 
     /**
-     * Odstraní knihu z databáze.
+     * Odstraní knihu z databáze
+     * 
+     * @param int $id ID knihy k odstranění
+     * 
+     * @return bool True při úspěchu, false při chybě
      */
     public function deleteBook(int $id): bool
     {
@@ -84,7 +123,14 @@ class Book
     }
 
     /**
-     * Importuje knihy z JSON souboru do databáze.
+     * Importuje knihy z JSON souboru do databáze
+     * 
+     * Načte JSON soubor s knihami a přidá je do databáze.
+     * Kontroluje duplicity na základě názvu a autora.
+     * 
+     * @param string $filePath Cesta k JSON souboru
+     * 
+     * @return array{success: bool, message: string, added?: int, skipped?: int} Výsledek importu
      */
     public function importBooksFromJson(string $filePath): array
     {
@@ -107,7 +153,7 @@ class Book
         $skippedCount = 0;
 
         foreach ($books as $bookData) {
-            // Jednoduchá kontrola duplicity (podle názvu a autora)
+            // Kontrola duplicity podle názvu a autora
             $stmt = $this->db->query(
                 "SELECT id FROM books WHERE title = ? AND author = ?",
                 [$bookData['title'] ?? '', $bookData['author'] ?? '']
@@ -115,7 +161,6 @@ class Book
             $existing = $stmt->fetchAll();
 
             if (empty($existing)) {
-                // Přidání knihy, pokud neexistuje
                 $this->createBook($bookData);
                 $addedCount++;
             } else {
