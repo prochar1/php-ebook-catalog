@@ -95,9 +95,7 @@ class BookController extends Controller
             }
         }
 
-        $this->renderAdmin('admin/books/create', [
-            'title' => 'Přidat knihu'
-        ]);
+        $this->renderAdmin('admin/books/create');
     }
 
     public function update(array $params): void
